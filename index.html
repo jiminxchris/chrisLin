@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 스마트 행정 실무 연수</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts (Noto Sans KR) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-btn.active {
+            background-color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9; /* slate-100 */
+        }
+        .tab-btn.active .icon-box {
+            background-color: #dbeafe; /* blue-100 */
+            color: #2563eb; /* blue-600 */
+        }
+        .tab-btn.active h4 {
+            color: #0f172a; /* slate-900 */
+        }
+        /* Accordion transition */
+        .accordion-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 800px; /* Arbitrary large height */
+            opacity: 1;
+        }
+        /* Code typing effect mask */
+        .mask-image-b-fade {
+            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 selection:bg-blue-200 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-600 p-2 rounded-lg text-white">
+                    <i data-lucide="cpu" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900">2025 스마트 행정 실무 연수</h1>
+                    <p class="text-xs text-slate-500">교육청 행정 혁신을 위한 AI 리터러시 (Ver 3.5, By ChrisLin)</p>
+                </div>
+            </div>
+            <div class="text-right hidden md:block">
+                <p class="text-sm font-semibold text-blue-600">Today: 2025. 12. 10</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-12">
+        
+        <!-- Intro Section -->
+        <section class="text-center py-16 bg-gradient-to-br from-blue-900 to-slate-900 rounded-3xl shadow-xl text-white overflow-hidden relative">
+            <div class="absolute top-0 left-0 w-full h-full opacity-20" style="background-image: url('https://www.transparenttextures.com/patterns/circuit-board.png');"></div>
+            <div class="relative z-10 px-4">
+                <span class="inline-block px-4 py-1.5 bg-blue-500/30 border border-blue-400/50 text-blue-200 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+                    AI Transformation for Public Service
+                </span>
+                <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
+                    AI와 함께하는<br />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                        미래형 교육 행정
+                    </span>
+                </h2>
+                <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    단순 챗봇을 넘어선 <strong>'바이브 코딩'</strong>과 <strong>'AI 에이전트'</strong>.<br class="hidden md:block"/>
+                    오늘 연수를 통해 여러분의 반복 업무를 90% 줄이는 방법을 경험하세요.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-lg hover:shadow-blue-500/50 flex items-center justify-center gap-2">
+                        커리큘럼 시작하기 <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                    <button class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-8 py-3.5 rounded-xl font-semibold transition-all backdrop-blur-sm flex items-center justify-center gap-2">
+                        <i data-lucide="monitor-play" class="w-5 h-5"></i> 데모 영상 보기
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deep Dive Concept Section -->
+        <section id="concepts" class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden scroll-mt-24">
+            <div class="p-8 border-b border-slate-100 bg-slate-50/50">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2 flex items-center gap-2">
+                            <i data-lucide="lightbulb" class="text-yellow-500 fill-yellow-500 w-6 h-6"></i>
+                            실습 전 핵심 개념 완전 정복
+                        </h3>
+                        <p class="text-slate-500">클릭하여 각 기술이 공무원 업무를 어떻게 바꾸는지 확인하세요.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row">
+                <!-- Tabs Navigation -->
+                <div class="lg:w-1/3 bg-slate-50 p-4 space-y-2 border-r border-slate-100">
+                    <!-- Tab Buttons will be generated by JS logic below for easier management, 
+                         or hardcoded. Hardcoding for clarity here. -->
+                    
+                    <!-- Tab 1: Evolution -->
+                    <button onclick="switchTab('evolution')" id="tab-btn-evolution" class="tab-btn w-full text-left p-5 rounded-xl transition-all flex items-center gap-4 group active">
+                        <div class="icon-box p-3 rounded-lg transition-colors bg-blue-100 text-blue-600">
+                            <i data-lucide="brain" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">생성형 AI의 진화</h4>
+                            <p class="text-xs text-slate-400 mt-1">Agent & Reasoning</p>
+                        </div>
+                    </button>
+
+                    <!-- Tab 2: Grounding -->
+                    <button onclick="switchTab('grounding')" id="tab-btn-grounding" class="tab-btn w-full text-left p-5 rounded-xl transition-all flex items-center gap-4 group hover:bg-white hover:shadow-md">
+                        <div class="icon-box p-3 rounded-lg transition-colors bg-slate-200 text-slate-500 group-hover:bg-slate-100">
+                            <i data-lucide="database" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-600">RAG와 그라운딩</h4>
+                            <p class="text-xs text-slate-400 mt-1">RAG & Verification</p>
+                        </div>
+                    </button>
+
+                    <!-- Tab 3: Vibe Coding -->
+                    <button onclick="switchTab('vibecoding')" id="tab-btn-vibecoding" class="tab-btn w-full text-left p-5 rounded-xl transition-all flex items-center gap-4 group hover:bg-white hover:shadow-md">
+                        <div class="icon-box p-3 rounded-lg transition-colors bg-slate-200 text-slate-500 group-hover:bg-slate-100">
+                            <i data-lucide="code" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-600">바이브 코딩</h4>
+                            <p class="text-xs text-slate-400 mt-1">Natural Language Coding</p>
+                        </div>
+                    </button>
+
+                    <!-- Tab 4: Automation -->
+                    <button onclick="switchTab('automation')" id="tab-btn-automation" class="tab-btn w-full text-left p-5 rounded-xl transition-all flex items-center gap-4 group hover:bg-white hover:shadow-md">
+                        <div class="icon-box p-3 rounded-lg transition-colors bg-slate-200 text-slate-500 group-hover:bg-slate-100">
+                            <i data-lucide="zap" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-600">Opal & 업무자동화</h4>
+                            <p class="text-xs text-slate-400 mt-1">Complete Workflow</p>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="lg:w-2/3 p-8 bg-white min-h-[500px] flex flex-col justify-center">
+                    
+                    <!-- Content 1: Evolution -->
+                    <div id="content-evolution" class="tab-content fade-in space-y-8">
+                        <div>
+                            <h4 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                                <span class="text-blue-600"><i data-lucide="brain" class="w-6 h-6"></i></span>
+                                1. 생성형 AI의 진화: 챗봇에서 에이전트로
+                            </h4>
+                            <p class="text-lg text-slate-700 leading-relaxed bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                                2023년의 AI가 단순히 '텍스트를 생성하는 챗봇'이었다면, 2025년의 'AI 에이전트'는 목표를 달성하기 위해 스스로 계획을 수립하고 도구를 사용합니다. 교육청 업무에서 '학부모 설명회 계획'을 지시하면, 단순히 기획안만 쓰는 것이 아니라 예산 산출, 장소 예약 가능 여부 확인, 가정통신문 초안 작성까지 연쇄적으로 수행합니다.
+                            </p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-slate-900 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-slate-500">
+                                <i data-lucide="layers" class="w-4 h-4"></i> 핵심 기술 요약
+                            </h5>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">멀티모달</div>
+                                    <div class="text-slate-600">민원인의 육성 녹음 파일과 첨부된 사진 자료를 동시에 분석하여 요약</div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">추론(Reasoning)</div>
+                                    <div class="text-slate-600">'학교폭력 사안 처리 가이드라인'을 학습하여 복잡한 케이스에 대한 절차적 조언 제공</div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">자율성(Autonomy)</div>
+                                    <div class="text-slate-600">사용자의 개입 없이 이메일 초안 작성 후 '검토 요청' 알림 발송</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h5 class="font-bold text-lg flex items-center gap-2">
+                                        <i data-lucide="sparkles" class="text-yellow-400 w-5 h-5"></i> 실전 업무 적용 시나리오
+                                    </h5>
+                                    <span class="text-xs bg-slate-800 px-3 py-1 rounded-full border border-slate-700 text-slate-300">상황: 신규 교사 연수 계획 수립</span>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="space-y-2 opacity-70">
+                                        <div class="flex items-center gap-2 text-red-300 text-sm font-bold uppercase">
+                                            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Before (기존)
+                                        </div>
+                                        <p class="text-sm leading-relaxed border-l-2 border-slate-700 pl-4">
+                                            담당자가 작년 기획안 찾아보고, 날짜 달력보고 잡고, 강사 섭외 전화 돌리고, 공문 기안문 작성함 (3일 소요)
+                                        </p>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-green-400 text-sm font-bold uppercase">
+                                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> After (AI 도입)
+                                        </div>
+                                        <p class="text-sm leading-relaxed border-l-2 border-green-500 pl-4 font-medium text-white">
+                                            에이전트에게 '12월 20일 신규 교사 연수 기획해줘, 작년 데이터 참고하고 강사 3명 후보 추천해'라고 지시 → 10분 뒤 초안 및 섭외 메일 초안 완료
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content 2: Grounding -->
+                    <div id="content-grounding" class="tab-content hidden fade-in space-y-8">
+                        <div>
+                            <h4 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                                <span class="text-blue-600"><i data-lucide="database" class="w-6 h-6"></i></span>
+                                2. 신뢰성 확보: RAG와 그라운딩(Grounding)
+                            </h4>
+                            <p class="text-lg text-slate-700 leading-relaxed bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                                교육행정에서 가장 치명적인 것은 '잘못된 정보'입니다. 일반적인 LLM은 모르는 내용도 지어내지만(Hallucination), RAG(검색 증강 생성) 기술은 AI가 답변하기 전에 지정된 '신뢰할 수 있는 자료(법령, 규정집, 공문)'를 먼저 찾아보고 그 근거를 바탕으로 답변하게 합니다.
+                            </p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-slate-900 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-slate-500">
+                                <i data-lucide="layers" class="w-4 h-4"></i> 핵심 기술 요약
+                            </h5>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">근거 제시</div>
+                                    <div class="text-slate-600">답변의 각 문장마다 '2025 유초중등 교육과정 총론 34p'와 같이 출처 명시</div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">범위 제한</div>
+                                    <div class="text-slate-600">인터넷의 불확실한 정보 차단, 우리 교육청 내부 데이터베이스만 참조하도록 설정</div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">최신성</div>
+                                    <div class="text-slate-600">AI 재학습 없이도 오늘 생성된 공문을 즉시 검색하여 답변에 반영</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h5 class="font-bold text-lg flex items-center gap-2">
+                                        <i data-lucide="sparkles" class="text-yellow-400 w-5 h-5"></i> 실전 업무 적용 시나리오
+                                    </h5>
+                                    <span class="text-xs bg-slate-800 px-3 py-1 rounded-full border border-slate-700 text-slate-300">상황: 민원 답변 작성</span>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="space-y-2 opacity-70">
+                                        <div class="flex items-center gap-2 text-red-300 text-sm font-bold uppercase">
+                                            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Before (기존)
+                                        </div>
+                                        <p class="text-sm leading-relaxed border-l-2 border-slate-700 pl-4">
+                                            관련 법령 법제처에서 검색하고, 내부 지침 파일 열어서 Ctrl+F로 찾느라 1시간 소요
+                                        </p>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-green-400 text-sm font-bold uppercase">
+                                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> After (AI 도입)
+                                        </div>
+                                        <p class="text-sm leading-relaxed border-l-2 border-green-500 pl-4 font-medium text-white">
+                                            NotebookLM에 '2025 민원 처리 매뉴얼' 업로드 후 질문 → '제5조 2항에 의거하여...'라고 답변 생성 (30초)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content 3: Vibe Coding -->
+                    <div id="content-vibecoding" class="tab-content hidden fade-in space-y-8">
+                        <div>
+                            <h4 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                                <span class="text-blue-600"><i data-lucide="code" class="w-6 h-6"></i></span>
+                                3. 바이브 코딩(Vibe Coding)과 업무 자동화
+                            </h4>
+                            <p class="text-lg text-slate-700 leading-relaxed bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                                코딩은 이제 개발자의 전유물이 아닙니다. '바이브 코딩'은 여러분이 평소 쓰는 말(자연어)로 업무 로직을 설명하면, AI가 그 의도(Vibe)를 파악하여 앱스크립트나 파이썬 코드를 짜주는 기술입니다. 엑셀 수식으로 해결 안 되는 복잡한 반복 업무를 해결할 수 있습니다.
+                            </p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-slate-900 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-slate-500">
+                                <i data-lucide="layers" class="w-4 h-4"></i> 핵심 기술 요약
+                            </h5>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">자연어 프로그래밍</div>
+                                    <div class="text-slate-600">'A열에 있는 학교 이름이랑 B열에 있는 금액 합쳐서 학교별로 PDF 만들어줘'라고 입력</div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">즉각적인 수정</div>
+                                    <div class="text-slate-600">'아, 글자 크기 좀 더 키워주고 제목은 파란색으로 해줘'라고 대화하듯 수정</div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">오류 자동 해결</div>
+                                    <div class="text-slate-600">실행 중 에러가 나면 AI가 원인을 분석하고 스스로 코드를 고쳐서 다시 실행</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h5 class="font-bold text-lg flex items-center gap-2">
+                                        <i data-lucide="sparkles" class="text-yellow-400 w-5 h-5"></i> 실전 업무 적용 시나리오
+                                    </h5>
+                                    <span class="text-xs bg-slate-800 px-3 py-1 rounded-full border border-slate-700 text-slate-300">상황: 방과후학교 만족도 조사 결과 취합</span>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="space-y-2 opacity-70">
+                                        <div class="flex items-center gap-2 text-red-300 text-sm font-bold uppercase">
+                                            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Before (기존)
+                                        </div>
+                                        <p class="text-sm leading-relaxed border-l-2 border-slate-700 pl-4">
+                                            100개 학교에서 온 엑셀 파일 하나씩 열어서 복사 붙여넣기 (반나절 소요)
+                                        </p>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-green-400 text-sm font-bold uppercase">
+                                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> After (AI 도입)
+                                        </div>
+                                        <p class="text-sm leading-relaxed border-l-2 border-green-500 pl-4 font-medium text-white">
+                                            Gemini에게 '이 폴더에 있는 모든 엑셀 파일 열어서 C3 셀 값만 가져와서 새 시트에 정리해줘' 명령 (5분)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content 4: Automation -->
+                    <div id="content-automation" class="tab-content hidden fade-in space-y-8">
+                        <div>
+                            <h4 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                                <span class="text-blue-600"><i data-lucide="zap" class="w-6 h-6"></i></span>
+                                4. 구글 Opal & Hyper-Automation
+                            </h4>
+                            <p class="text-lg text-slate-700 leading-relaxed bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                                단순 반복 업무의 '완전 자동화'를 의미합니다. 구글의 차세대 어시스턴트 'Opal'은 워크스페이스(메일, 캘린더, 드라이브) 전체를 관제하며, 회의가 끝나면 알아서 회의록을 정리해 참석자에게 메일을 보내고, 캘린더에 다음 일정을 잡는 등 비서 역할을 수행합니다.
+                            </p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-slate-900 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-slate-500">
+                                <i data-lucide="layers" class="w-4 h-4"></i> 핵심 기술 요약
+                            </h5>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">Work Loop 자동화</div>
+                                    <div class="text-slate-600">[메일 수신 → 첨부파일 저장 → 내용 요약 → 담당자 배정]의 과정을 자동화</div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">문맥 인식</div>
+                                    <div class="text-slate-600">'지난번 그 회의 자료'라고 말해도 정확히 어떤 파일인지 문맥으로 파악</div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm hover:border-blue-200 transition-colors">
+                                    <div class="font-bold text-slate-800 mb-1">선제적 제안</div>
+                                    <div class="text-slate-600">사용자가 시키기 전에 '내일 출장 가시니 관련 서류 미리 출력할까요?'라고 제안</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h5 class="font-bold text-lg flex items-center gap-2">
+                                        <i data-lucide="sparkles" class="text-yellow-400 w-5 h-5"></i> 실전 업무 적용 시나리오
+                                    </h5>
+                                    <span class="text-xs bg-slate-800 px-3 py-1 rounded-full border border-slate-700 text-slate-300">상황: 주간 업무 회의</span>
+                                </div>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="space-y-2 opacity-70">
+                                        <div class="flex items-center gap-2 text-red-300 text-sm font-bold uppercase">
+                                            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Before (기존)
+                                        </div>
+                                        <p class="text-sm leading-relaxed border-l-2 border-slate-700 pl-4">
+                                            서기가 받아 적고, 정리해서 부서장 컨펌 받고, 수정해서 팀원들에게 메일 발송
+                                        </p>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-green-400 text-sm font-bold uppercase">
+                                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> After (AI 도입)
+                                        </div>
+                                        <p class="text-sm leading-relaxed border-l-2 border-green-500 pl-4 font-medium text-white">
+                                            AI가 실시간 녹음/텍스트 변환, '결정 사항'과 '할 일' 자동 추출하여 회의 종료 1분 뒤 메일 발송 완료
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Prompt Engineering Guide Section -->
+        <section class="bg-white rounded-3xl p-8 md:p-12 border border-slate-200 shadow-sm">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h3 class="text-3xl font-bold text-slate-900 mb-4">공무원 전용 프롬프트 가이드</h3>
+                <p class="text-slate-600">
+                    AI에게 일을 잘 시키는 것도 능력입니다. 모호한 지시는 모호한 결과를 낳습니다.<br />
+                    <span class="text-blue-600 font-bold">나쁜 예시</span>와 <span class="text-green-600 font-bold">좋은 예시</span>를 비교해보세요.
+                </p>
+            </div>
+
+            <div class="grid gap-6">
+                <!-- Accordion Item 1 -->
+                <div class="border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow bg-slate-50">
+                    <div class="p-6 cursor-pointer bg-white flex justify-between items-center" onclick="toggleAccordion('prompt-1', this)">
+                        <h4 class="font-bold text-lg text-slate-800 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold">1</span>
+                            기안문(공문) 초안 작성
+                        </h4>
+                        <i data-lucide="chevron-down" class="text-slate-400 transition-transform duration-300"></i>
+                    </div>
+                    
+                    <div id="prompt-1" class="accordion-content">
+                        <div class="p-6 pt-0 grid md:grid-cols-2 gap-6 border-t border-slate-100">
+                            <div class="bg-red-50 p-5 rounded-xl border border-red-100 mt-6">
+                                <div class="flex items-center gap-2 text-red-600 font-bold mb-3 text-sm">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4"></i> Bad Prompt
+                                </div>
+                                <div class="bg-white p-3 rounded-lg text-slate-600 text-sm font-mono shadow-sm">
+                                    "학부모 연수 공문 써줘."
+                                </div>
+                                <p class="text-xs text-red-500 mt-2">❌ 맥락과 형식이 없어 AI가 일반적인 내용만 생성함</p>
+                            </div>
+                            
+                            <div class="bg-green-50 p-5 rounded-xl border border-green-100 mt-6 relative group">
+                                <div class="flex items-center justify-between text-green-700 font-bold mb-3 text-sm">
+                                    <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> Good Prompt</div>
+                                    <button class="opacity-0 group-hover:opacity-100 transition-opacity text-xs bg-white px-2 py-1 rounded border border-green-200 flex items-center gap-1 hover:bg-green-100">
+                                        <i data-lucide="copy" class="w-3 h-3"></i> 복사
+                                    </button>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg text-slate-700 text-sm leading-relaxed shadow-sm font-medium">
+                                    당신은 10년 차 교육 행정 전문가입니다. [대상: 관내 초중고 학부모], [주제: 2025 AI 디지털 교과서 도입 안내], [일시: 2025.12.20. 14:00], [장소: 교육청 대강당] 내용을 포함하여 정중하고 명확한 어조의 '가정통신문' 초안을 작성해주세요. 서론에는 디지털 전환의 필요성을 2문장으로 강조해주세요.
+                                </div>
+                                <div class="mt-3 flex items-start gap-2 text-xs text-green-700 bg-green-100/50 p-2 rounded">
+                                    <i data-lucide="lightbulb" class="w-3 h-3 mt-0.5 shrink-0"></i>
+                                    <span><strong>Tip:</strong> 역할(Persona), 대상, 핵심 정보, 어조, 형식을 구체적으로 지정해야 고품질의 결과물이 나옵니다.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Item 2 -->
+                <div class="border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow bg-slate-50">
+                    <div class="p-6 cursor-pointer bg-white flex justify-between items-center" onclick="toggleAccordion('prompt-2', this)">
+                        <h4 class="font-bold text-lg text-slate-800 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold">2</span>
+                            민원 전화 응대 매뉴얼 요약
+                        </h4>
+                        <i data-lucide="chevron-down" class="text-slate-400 transition-transform duration-300"></i>
+                    </div>
+                    
+                    <div id="prompt-2" class="accordion-content">
+                        <div class="p-6 pt-0 grid md:grid-cols-2 gap-6 border-t border-slate-100">
+                            <div class="bg-red-50 p-5 rounded-xl border border-red-100 mt-6">
+                                <div class="flex items-center gap-2 text-red-600 font-bold mb-3 text-sm">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4"></i> Bad Prompt
+                                </div>
+                                <div class="bg-white p-3 rounded-lg text-slate-600 text-sm font-mono shadow-sm">
+                                    "이거 요약해."
+                                </div>
+                                <p class="text-xs text-red-500 mt-2">❌ 맥락과 형식이 없어 AI가 일반적인 내용만 생성함</p>
+                            </div>
+                            
+                            <div class="bg-green-50 p-5 rounded-xl border border-green-100 mt-6 relative group">
+                                <div class="flex items-center justify-between text-green-700 font-bold mb-3 text-sm">
+                                    <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4"></i> Good Prompt</div>
+                                    <button class="opacity-0 group-hover:opacity-100 transition-opacity text-xs bg-white px-2 py-1 rounded border border-green-200 flex items-center gap-1 hover:bg-green-100">
+                                        <i data-lucide="copy" class="w-3 h-3"></i> 복사
+                                    </button>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg text-slate-700 text-sm leading-relaxed shadow-sm font-medium">
+                                    첨부한 [악성 민원 대응 매뉴얼.pdf]를 바탕으로, 전화 응대 시 직원이 반드시 지켜야 할 '3단계 대응 수칙'을 체크리스트 형태로 요약해주세요. 특히 법적 보호 조치와 관련된 내용은 빨간색으로 강조해서 테이블(표) 형식으로 만들어주세요.
+                                </div>
+                                <div class="mt-3 flex items-start gap-2 text-xs text-green-700 bg-green-100/50 p-2 rounded">
+                                    <i data-lucide="lightbulb" class="w-3 h-3 mt-0.5 shrink-0"></i>
+                                    <span><strong>Tip:</strong> 출력 형식(체크리스트, 표, 마크다운 등)을 지정하면 바로 보고서에 붙여넣을 수 있습니다.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vibe Coding Section -->
+        <section class="bg-slate-900 text-white rounded-3xl p-8 md:p-12 overflow-hidden relative">
+            <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-sm">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        2025 Key Trend
+                    </div>
+                    <h3 class="text-3xl font-bold">
+                        코딩 몰라도 괜찮습니다.<br />
+                        <span class="text-blue-400">'바이브 코딩'</span>이 있으니까요.
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        "이 엑셀 파일에서 학교별 예산 총액을 계산하고, 기준 초과 학교는 빨간색으로 표시한 뒤 PDF로 저장해서 나한테 메일 보내줘."
+                        <br /><br />
+                        이 문장이 곧 코드입니다. Gemini와 AppScript가 여러분의 의도(Vibe)를 파악하여 복잡한 업무 자동화 스크립트를 즉시 생성합니다. 오늘 우리는 이 마법을 직접 경험할 것입니다.
+                    </p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <div class="bg-slate-800 rounded-xl p-4 border border-slate-700 shadow-2xl">
+                        <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="text-xs text-slate-500 ml-2">Gemini Code Assistant</span>
+                        </div>
+                        <div class="space-y-3 font-mono text-sm">
+                            <div class="flex gap-2">
+                                <span class="text-blue-400 shrink-0">User:</span>
+                                <span class="text-slate-300">매주 금요일 오후 4시에 주간 업무 보고 시트 취합해서 알림 보내는 봇 만들어줘.</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-green-400 shrink-0">Gemini:</span>
+                                <span class="text-slate-400">네, Google Apps Script로 트리거와 이메일 발송 기능을 포함한 코드를 생성했습니다. 바로 적용하시겠습니까?</span>
+                            </div>
+                            <div class="bg-black/50 p-3 rounded text-xs text-green-300 mt-2">
+                                function sendWeeklyReport() {<br>
+                                &nbsp;&nbsp;const sheet = SpreadsheetApp.getActive();<br>
+                                &nbsp;&nbsp;const data = sheet.getDataRange().getValues();<br>
+                                &nbsp;&nbsp;// ... (Auto-generated code) ...<br>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Decorative Background Elements -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        </section>
+
+        <!-- Roadmap -->
+        <section>
+            <div class="flex items-center justify-between mb-8">
+                <h3 class="text-2xl font-bold flex items-center gap-2 text-slate-900">
+                    <i data-lucide="layers" class="text-blue-600 w-6 h-6"></i>
+                    오늘의 실습 로드맵
+                </h3>
+                <span class="text-sm font-medium text-slate-500 bg-white px-4 py-1.5 rounded-full border border-slate-200 shadow-sm">
+                    4시간 집중 과정
+                </span>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <!-- Step 1 -->
+                <div class="relative group">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm h-full flex flex-col items-center text-center hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3 bg-blue-100 text-blue-800 font-bold text-lg shadow-sm">
+                            1
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1">AI Basic</h4>
+                        <p class="text-xs font-semibold text-slate-500 mb-2">생성형 AI 이해</p>
+                        <p class="text-xs text-slate-400">ChatGPT vs Claude vs Gemini</p>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 text-slate-300">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative group">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm h-full flex flex-col items-center text-center hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3 bg-teal-100 text-teal-800 font-bold text-lg shadow-sm">
+                            2
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1">Search</h4>
+                        <p class="text-xs font-semibold text-slate-500 mb-2">심층 정보 탐색</p>
+                        <p class="text-xs text-slate-400">Perplexity 활용법</p>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 text-slate-300">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative group">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm h-full flex flex-col items-center text-center hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3 bg-indigo-100 text-indigo-800 font-bold text-lg shadow-sm">
+                            3
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1">Verify</h4>
+                        <p class="text-xs font-semibold text-slate-500 mb-2">자료 검증/분석</p>
+                        <p class="text-xs text-slate-400">NotebookLM 활용</p>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 text-slate-300">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative group">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm h-full flex flex-col items-center text-center hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3 bg-purple-100 text-purple-800 font-bold text-lg shadow-sm">
+                            4
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1">Coding</h4>
+                        <p class="text-xs font-semibold text-slate-500 mb-2">업무 자동화</p>
+                        <p class="text-xs text-slate-400">Vibe Coding 실습</p>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 text-slate-300">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+                <!-- Step 5 -->
+                <div class="relative group">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm h-full flex flex-col items-center text-center hover:shadow-lg hover:border-blue-300 hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-3 bg-orange-100 text-orange-800 font-bold text-lg shadow-sm">
+                            5
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-1">Review</h4>
+                        <p class="text-xs font-semibold text-slate-500 mb-2">보고서 완성</p>
+                        <p class="text-xs text-slate-400">Google Opal 활용</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 mt-12 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="mb-4 text-slate-500">본 교육 자료는 2025년 12월 10일 기준 최신 기술 동향을 반영하여 제작되었습니다.</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-sm font-medium">
+                <span>© 2025 ChrisLin by 인선미</span>
+                <span class="hidden md:inline text-slate-700">|</span>
+                <span>서울시교육청 연수 맞춤형 자료</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Update Buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-white', 'shadow-md', 'border-l-4', 'border-blue-500', 'text-blue-700');
+                btn.classList.add('hover:bg-white', 'hover:shadow-md'); // Re-add hover states
+                
+                // Reset Icon Colors
+                const iconBox = btn.querySelector('.icon-box');
+                iconBox.classList.remove('bg-blue-100', 'text-blue-600');
+                iconBox.classList.add('bg-slate-200', 'text-slate-500', 'group-hover:bg-slate-100');
+                
+                // Reset Text Colors
+                btn.querySelector('h4').classList.remove('text-slate-900');
+                btn.querySelector('h4').classList.add('text-slate-600');
+            });
+
+            // Activate Clicked Button
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            activeBtn.classList.add('active'); // CSS class handles the main active styles
+            activeBtn.classList.remove('hover:bg-white', 'hover:shadow-md'); // Remove hover states to avoid conflict
+            
+            // Activate Icon Colors
+            const activeIconBox = activeBtn.querySelector('.icon-box');
+            activeIconBox.classList.remove('bg-slate-200', 'text-slate-500', 'group-hover:bg-slate-100');
+            activeIconBox.classList.add('bg-blue-100', 'text-blue-600');
+            
+            // Activate Text Colors
+            activeBtn.querySelector('h4').classList.remove('text-slate-600');
+            activeBtn.querySelector('h4').classList.add('text-slate-900');
+
+
+            // Update Content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+        }
+
+        // Accordion Logic
+        function toggleAccordion(contentId, headerElement) {
+            const content = document.getElementById(contentId);
+            const icon = headerElement.querySelector('i[data-lucide="chevron-down"]');
+            
+            const isOpen = content.classList.contains('open');
+
+            // Close all first (Optional - if you want only one open at a time)
+            // document.querySelectorAll('.accordion-content').forEach(el => {
+            //     el.classList.remove('open');
+            //     // Reset icons here if implementing one-at-a-time logic
+            // });
+
+            if (isOpen) {
+                content.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+</body>
+</html>
