@@ -1,2 +1,6 @@
 # chrisLin
-연수용웹페이지
+
+
+https://jiminxchris.github.io/chrisLin/
+
+https://jiminxchris.github.io/chrisLin/azureVSaws.html
