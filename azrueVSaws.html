@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS vs Azure: 클라우드 비교 분석 리포트</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: Warm Professional
+         Background: Neutral Warm Gray (#F9FAFB)
+         AWS Accent: #FF9900 (Orange)
+         Azure Accent: #0078D4 (Blue)
+         Text: Slate 800
+    -->
+
+    <!-- Application Structure Plan: 
+         1. Dashboard Overview: High-level market share and key growth metrics to establish context.
+         2. Service Battleground: Interactive tab-based comparison of core services (Compute, Storage, DB, AI) allowing users to drill down into specific technical equivalents.
+         3. Ecosystem & Strategy: Radar chart visualization comparing qualitative aspects (Enterprise integration, Open Source, Ease of use).
+         4. Global Infrastructure: Comparative bar charts showing regions and availability zones.
+         5. Pricing & Conclusion: Interactive checklist for decision-making.
+         
+         Why: This structure moves from macro (market) to micro (services) to strategic (ecosystem), guiding the user through a logical evaluation process.
+    -->
+
+    <!-- Visualization & Content Choices:
+         1. Market Share: Doughnut Chart (Chart.js) -> Goal: Inform -> Quick visualization of dominance.
+         2. Service Comparison: Dynamic DOM Manipulation -> Goal: Compare -> User selects category, text updates instantly. No SVG needed.
+         3. Capability Analysis: Radar Chart (Chart.js) -> Goal: Compare -> Multi-dimensional comparison of qualitative strengths.
+         4. Infrastructure: Bar Chart (Chart.js) -> Goal: Inform -> Quantitative comparison of global reach.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc; /* neutral-50 */
+            color: #1e293b; /* slate-800 */
+        }
+
+        /* Custom Chart Container Styles as per requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* max-w-xl equivalent approx */
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px; 
+            max-height: 400px;
+        }
+
+        @media (max-width: 640px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        /* Custom Scrollbar for side navigation */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        .nav-item.active {
+            background-color: #e2e8f0;
+            border-right: 4px solid #3b82f6;
+            font-weight: 700;
+        }
+        
+        .aws-gradient {
+            background: linear-gradient(135deg, #FF9900 0%, #FFC46D 100%);
+        }
+        
+        .azure-gradient {
+            background: linear-gradient(135deg, #0078D4 0%, #50E6FF 100%);
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+
+    <!-- Mobile Header -->
+    <header class="md:hidden bg-white border-b border-gray-200 p-4 flex justify-between items-center sticky top-0 z-50">
+        <h1 class="text-xl font-bold text-gray-800">Cloud Wars 2025</h1>
+        <button id="mobile-menu-btn" class="text-gray-600 focus:outline-none text-2xl">
+            &#9776; <!-- Unicode Hamburger -->
+        </button>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-full md:w-64 bg-white border-r border-gray-200 h-screen sticky top-0 fixed md:relative z-40 transition-transform transform md:translate-x-0">
+        <div class="p-6 border-b border-gray-100">
+            <h1 class="text-2xl font-bold text-slate-800">Cloud Wars <span class="text-blue-600">Report</span></h1>
+            <p class="text-xs text-gray-500 mt-1">AWS vs Azure 비교 분석</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1">
+                <li><button onclick="navigateTo('overview')" class="nav-item w-full text-left px-6 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors active" data-target="overview">📊 시장 개요 (Overview)</button></li>
+                <li><button onclick="navigateTo('services')" class="nav-item w-full text-left px-6 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" data-target="services">🛠️ 핵심 서비스 비교</button></li>
+                <li><button onclick="navigateTo('capabilities')" class="nav-item w-full text-left px-6 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" data-target="capabilities">⚡ 강점 및 약점 분석</button></li>
+                <li><button onclick="navigateTo('infrastructure')" class="nav-item w-full text-left px-6 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" data-target="infrastructure">🌍 글로벌 인프라</button></li>
+                <li><button onclick="navigateTo('verdict')" class="nav-item w-full text-left px-6 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" data-target="verdict">✅ 최종 결론 & 선택 가이드</button></li>
+            </ul>
+        </nav>
+        <div class="p-6 border-t border-gray-100 text-xs text-gray-400">
+            &copy; 2025 Cloud Analytics<br>Generated for Analysis
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto scroll-smooth">
+        
+        <!-- Section 1: Overview -->
+        <section id="overview" class="space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">현재 클라우드 시장 현황</h2>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    2025년 기준, 클라우드 인프라 시장은 여전히 <strong>Amazon Web Services (AWS)</strong>와 <strong>Microsoft Azure</strong>의 양강 구도입니다. 
+                    AWS는 퍼스트 무버(First Mover)로서의 방대한 생태계와 성숙도를 자랑하며, Azure는 Microsoft 엔터프라이즈 환경과의 강력한 통합과 AI 분야의 급격한 성장을 무기로 시장 점유율을 빠르게 좁히고 있습니다. 
+                    이 섹션에서는 두 거대 플랫폼의 현재 시장 지배력을 정량적으로 비교합니다.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Market Share Chart -->
+                    <div class="flex flex-col items-center">
+                        <div class="chart-container">
+                            <canvas id="marketShareChart"></canvas>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2 text-center">전 세계 클라우드 인프라 서비스 지출 점유율 (추정치)</p>
+                    </div>
+
+                    <!-- Key Stats Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                        <div class="p-6 rounded-lg bg-orange-50 border border-orange-100 hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-orange-600">AWS</span>
+                                <span class="text-2xl">☁️</span>
+                            </div>
+                            <div class="text-3xl font-bold text-gray-800">32%</div>
+                            <p class="text-sm text-gray-600 mt-1">시장 점유율</p>
+                            <p class="text-xs text-gray-500 mt-3 border-t border-orange-200 pt-2">스타트업부터 대기업까지 가장 넓은 사용자 층</p>
+                        </div>
+
+                        <div class="p-6 rounded-lg bg-blue-50 border border-blue-100 hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-blue-600">Azure</span>
+                                <span class="text-2xl">🟦</span>
+                            </div>
+                            <div class="text-3xl font-bold text-gray-800">23%</div>
+                            <p class="text-sm text-gray-600 mt-1">시장 점유율</p>
+                            <p class="text-xs text-gray-500 mt-3 border-t border-blue-200 pt-2">Fortune 500 기업의 95% 이상이 사용 중</p>
+                        </div>
+
+                        <div class="col-span-1 sm:col-span-2 p-6 rounded-lg bg-gray-50 border border-gray-200">
+                            <h3 class="font-semibold text-gray-700 mb-2">💡 핵심 인사이트</h3>
+                            <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                <li>AWS는 여전히 시장 리더이지만 성장률은 점차 안정화 단계에 접어들었습니다.</li>
+                                <li>Azure는 OpenAI와의 파트너십을 통해 AI/ML 워크로드에서 강력한 성장세를 보입니다.</li>
+                                <li>멀티 클라우드 전략이 보편화됨에 따라 두 플랫폼을 동시에 사용하는 기업이 70%를 넘습니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Services Comparison -->
+        <section id="services" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">핵심 서비스 1:1 비교</h2>
+                    <p class="text-gray-600">
+                        두 플랫폼은 거의 동일한 기능을 수행하는 서비스들을 보유하고 있지만, 용어(Terminology)와 세부 구현 방식에 차이가 있습니다.
+                        아래 카테고리 탭을 클릭하여 주요 서비스 간의 매핑과 특징을 확인하십시오. 이는 마이그레이션이나 멀티 클라우드 설계 시 필수적인 지식입니다.
+                    </p>
+                </div>
+
+                <!-- Interactive Tabs -->
+                <div class="flex flex-wrap gap-2 mb-6" id="service-tabs">
+                    <button onclick="renderServiceComparison('compute')" class="px-4 py-2 rounded-full text-sm font-semibold bg-gray-800 text-white transition-colors tab-btn" data-tab="compute">💻 컴퓨팅 (Compute)</button>
+                    <button onclick="renderServiceComparison('storage')" class="px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors tab-btn" data-tab="storage">💾 스토리지 (Storage)</button>
+                    <button onclick="renderServiceComparison('database')" class="px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors tab-btn" data-tab="database">🗄️ 데이터베이스 (DB)</button>
+                    <button onclick="renderServiceComparison('ai')" class="px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors tab-btn" data-tab="ai">🤖 AI & 머신러닝</button>
+                    <button onclick="renderServiceComparison('devops')" class="px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors tab-btn" data-tab="devops">🚀 DevOps</button>
+                </div>
+
+                <!-- Comparison Content Area -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-8 rounded-2xl overflow-hidden border border-gray-200">
+                    <!-- AWS Side -->
+                    <div class="bg-orange-50/50 p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-200">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded bg-[#FF9900] flex items-center justify-center text-white font-bold text-xs">AWS</div>
+                            <h3 class="text-xl font-bold text-gray-800">Amazon Web Services</h3>
+                        </div>
+                        <div id="aws-service-content" class="space-y-4">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+
+                    <!-- Azure Side -->
+                    <div class="bg-blue-50/50 p-6 md:p-8">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded bg-[#0078D4] flex items-center justify-center text-white font-bold text-xs">AZURE</div>
+                            <h3 class="text-xl font-bold text-gray-800">Microsoft Azure</h3>
+                        </div>
+                        <div id="azure-service-content" class="space-y-4">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Capabilities Radar -->
+        <section id="capabilities" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">강점 및 전략적 포지셔닝</h2>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    단순한 기능 목록을 넘어, 각 플랫폼이 추구하는 철학과 기업 환경에서의 적합성을 분석했습니다. 
+                    아래 레이더 차트는 5가지 핵심 차원(엔터프라이즈 통합, 오픈소스 친화성, 사용자 경험, 가격 유연성, 기술 성숙도)에서의 상대적 강점을 보여줍니다.
+                    차트 영역에 마우스를 올리면 상세 점수를 확인할 수 있습니다.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Radar Chart -->
+                    <div class="lg:col-span-2 flex flex-col items-center justify-center bg-gray-50 rounded-xl p-4">
+                        <div class="chart-container">
+                            <canvas id="capabilitiesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Text -->
+                    <div class="space-y-6">
+                        <div class="p-4 border-l-4 border-orange-400 bg-orange-50">
+                            <h4 class="font-bold text-gray-800 mb-2">AWS의 강점</h4>
+                            <p class="text-sm text-gray-600">
+                                <strong>기술적 성숙도와 방대함:</strong> 가장 많은 서비스 수와 깊이를 제공합니다. 오픈소스 기술 수용에 적극적이며, 개발자 중심의 커뮤니티가 매우 강력합니다. 
+                                문서화가 방대하고 레퍼런스가 많아 문제 해결이 용이합니다.
+                            </p>
+                        </div>
+                        
+                        <div class="p-4 border-l-4 border-blue-500 bg-blue-50">
+                            <h4 class="font-bold text-gray-800 mb-2">Azure의 강점</h4>
+                            <p class="text-sm text-gray-600">
+                                <strong>하이브리드 & 엔터프라이즈:</strong> Windows Server, Active Directory, SQL Server 등 기존 MS 생태계와의 완벽한 통합을 제공합니다. 
+                                하이브리드 클라우드 전략에 있어 가장 강력한 솔루션을 보유하고 있으며, 최근 OpenAI 독점 파트너십으로 AI 주도권을 잡았습니다.
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <h4 class="font-bold text-gray-800 text-sm mb-2">🔍 비교 요약</h4>
+                            <ul class="text-xs text-gray-600 space-y-2">
+                                <li>✨ <strong>사용성:</strong> Azure는 GUI 중심, AWS는 CLI/API 중심 성향</li>
+                                <li>💸 <strong>가격:</strong> AWS는 복잡하지만 세밀함, Azure는 기업 계약(EA) 유리</li>
+                                <li>🚀 <strong>속도:</strong> AWS가 신기술 출시는 빠르나, Azure가 기업 적용은 빠름</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Infrastructure -->
+        <section id="infrastructure" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">글로벌 인프라 비교</h2>
+                <p class="text-gray-600 mb-6">
+                    클라우드 선택 시 데이터 주권, 지연 시간(Latency), 재해 복구(DR) 요건을 충족하기 위해 데이터센터의 위치는 매우 중요합니다.
+                    Azure는 전 세계적으로 가장 많은 리전(Region) 수를 보유하고 있다고 마케팅하지만, AWS는 각 리전 내의 가용 영역(AZ) 구조가 더 독립적이고 견고하게 설계되어 있습니다.
+                </p>
+
+                <div class="flex flex-col gap-6">
+                    <div class="chart-container h-80">
+                        <canvas id="infraChart"></canvas>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                        <div class="border border-gray-200 rounded-lg p-5">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">AWS 인프라 철학</h3>
+                            <p class="text-sm text-gray-600 mb-3">"격리와 안정성"</p>
+                            <ul class="text-sm text-gray-500 list-disc list-inside space-y-1">
+                                <li>모든 리전은 3개 이상의 AZ(가용영역)로 구성</li>
+                                <li>AZ 간 완벽한 물리적 격리 및 저지연 연결</li>
+                                <li>가장 긴 가동 시간 기록 보유</li>
+                            </ul>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-5">
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">Azure 인프라 철학</h3>
+                            <p class="text-sm text-gray-600 mb-3">"광범위한 도달 범위"</p>
+                            <ul class="text-sm text-gray-500 list-disc list-inside space-y-1">
+                                <li>전 세계 60개 이상의 리전 (경쟁사 대비 최다)</li>
+                                <li>일부 리전은 AZ 개념 없이 단일 데이터센터로 시작</li>
+                                <li>국가별 규제 준수(Compliance)에 유리</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Verdict -->
+        <section id="verdict" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">최종 결론 및 선택 가이드</h2>
+                <p class="text-gray-600 mb-8">
+                    "어느 것이 더 나은가?"라는 질문에는 정답이 없습니다. 조직의 현재 기술 스택, 비즈니스 목표, 예산 구조에 따라 최적의 선택이 달라집니다.
+                    아래 체크리스트를 통해 귀하의 조직에 더 적합한 클라우드를 확인해보세요.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Choose AWS If -->
+                    <div class="bg-gradient-to-br from-orange-50 to-white border border-orange-100 rounded-xl p-6 shadow-sm">
+                        <h3 class="text-xl font-bold text-orange-600 mb-4 flex items-center gap-2">
+                            <span>✅</span> AWS를 선택하세요, 만약...
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                <span class="bg-orange-100 text-orange-600 rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">1</span>
+                                <span>가장 광범위한 서비스와 최신 기술 스택이 필요한 스타트업이나 테크 기업인 경우</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                <span class="bg-orange-100 text-orange-600 rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">2</span>
+                                <span>인프라에 대한 매우 세밀한 제어(Granular Control)와 구성이 필요한 경우</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                <span class="bg-orange-100 text-orange-600 rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">3</span>
+                                <span>안정성과 가동 시간(Uptime)이 비즈니스의 최우선 순위인 경우</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                <span class="bg-orange-100 text-orange-600 rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">4</span>
+                                <span>오픈소스 도구와 리눅스 기반 환경을 주로 사용하는 경우</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Choose Azure If -->
+                    <div class="bg-gradient-to-br from-blue-50 to-white border border-blue-100 rounded-xl p-6 shadow-sm">
+                        <h3 class="text-xl font-bold text-blue-600 mb-4 flex items-center gap-2">
+                            <span>✅</span> Azure를 선택하세요, 만약...
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">1</span>
+                                <span>이미 Microsoft 라이선스(Office 365, Windows Server, SQL)를 대규모로 사용 중인 경우</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">2</span>
+                                <span>하이브리드 클라우드 구축이 핵심 전략이며, 온프레미스 연동이 중요한 경우</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">3</span>
+                                <span>OpenAI Service 등 최신 생성형 AI 기능을 쉽고 빠르게 통합하고 싶은 경우</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-700 text-sm">
+                                <span class="bg-blue-100 text-blue-600 rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">4</span>
+                                <span>PaaS 중심의 개발 환경을 선호하여 인프라 관리 부담을 줄이고 싶은 경우</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-gray-800 text-white rounded-xl text-center">
+                    <h4 class="text-lg font-bold mb-2">결론: 승자는 없습니다</h4>
+                    <p class="text-sm opacity-80 max-w-2xl mx-auto">
+                        최근 트렌드는 '멀티 클라우드'입니다. AWS의 안정적인 인프라 위에서 핵심 워크로드를 돌리고, Azure의 AI 기능이나 Office 통합 기능을 활용하는 것이 많은 엔터프라이즈의 표준 전략이 되고 있습니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- Data Store ---
+        const serviceData = {
+            compute: {
+                aws: { title: "Amazon EC2", desc: "크기 조정 가능한 컴퓨팅 용량. 가장 다양한 인스턴스 타입 보유.", feature: "Auto Scaling, Lambda" },
+                azure: { title: "Azure Virtual Machines", desc: "몇 초 만에 Linux 및 Windows VM 배포.", feature: "VM Scale Sets, Functions" }
+            },
+            storage: {
+                aws: { title: "Amazon S3", desc: "업계 표준 객체 스토리지. 99.999999999% 내구성.", feature: "EBS (Block), EFS (File)" },
+                azure: { title: "Azure Blob Storage", desc: "클라우드 네이티브 워크로드를 위한 대규모 객체 스토리지.", feature: "Disk Storage, Azure Files" }
+            },
+            database: {
+                aws: { title: "Amazon RDS", desc: "관리형 관계형 데이터베이스 (MySQL, PostgreSQL 등).", feature: "Aurora (고성능), DynamoDB (NoSQL)" },
+                azure: { title: "Azure SQL Database", desc: "완전 관리형 지능형 SQL 데이터베이스.", feature: "Cosmos DB (Global NoSQL)" }
+            },
+            ai: {
+                aws: { title: "Amazon SageMaker", desc: "모든 개발자를 위한 머신러닝 모델 구축, 훈련, 배포.", feature: "Bedrock (생성형 AI API)" },
+                azure: { title: "Azure AI Services", desc: "OpenAI 모델(GPT-4) 독점 제공 및 통합.", feature: "Machine Learning Studio" }
+            },
+            devops: {
+                aws: { title: "AWS CodePipeline", desc: "지속적 통합 및 지속적 전달(CI/CD) 서비스.", feature: "CloudFormation (IaC)" },
+                azure: { title: "Azure DevOps", desc: "협업 도구 세트 (Boards, Repos, Pipelines).", feature: "ARM Templates, Bicep" }
+            }
+        };
+
+        // --- Navigation Logic ---
+        function navigateTo(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('main > section').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Show target section
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Update sidebar active state
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('active', 'bg-gray-100', 'font-bold', 'border-r-4', 'border-blue-500');
+                if(el.dataset.target === sectionId) {
+                    el.classList.add('active');
+                }
+            });
+
+            // Mobile menu close logic (if needed)
+            const sidebar = document.getElementById('sidebar');
+            if(window.innerWidth < 768) {
+                sidebar.classList.add('hidden');
+            }
+        }
+
+        // --- Service Tab Logic ---
+        function renderServiceComparison(category) {
+            const data = serviceData[category];
+            const awsContent = document.getElementById('aws-service-content');
+            const azureContent = document.getElementById('azure-service-content');
+            const tabs = document.querySelectorAll('.tab-btn');
+
+            // Update Tabs
+            tabs.forEach(btn => {
+                if(btn.dataset.tab === category) {
+                    btn.classList.remove('bg-gray-100', 'text-gray-600');
+                    btn.classList.add('bg-gray-800', 'text-white');
+                } else {
+                    btn.classList.add('bg-gray-100', 'text-gray-600');
+                    btn.classList.remove('bg-gray-800', 'text-white');
+                }
+            });
+
+            // Update Content with Animation
+            const createCard = (info, colorClass, label) => `
+                <div class="animate-fade-in-up">
+                    <h4 class="text-lg font-bold text-gray-800">${info.title}</h4>
+                    <p class="text-sm text-gray-600 mt-2 min-h-[40px]">${info.desc}</p>
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">주요 관련 서비스</span>
+                        <p class="text-sm font-medium ${colorClass} mt-1">${info.feature}</p>
+                    </div>
+                </div>
+            `;
+
+            awsContent.innerHTML = createCard(data.aws, 'text-orange-600', 'AWS');
+            azureContent.innerHTML = createCard(data.azure, 'text-blue-600', 'Azure');
+        }
+
+        // --- Chart Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial render of service comparison
+            renderServiceComparison('compute');
+
+            // Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const sidebar = document.getElementById('sidebar');
+            mobileBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('fixed');
+                sidebar.classList.toggle('h-full');
+                sidebar.classList.toggle('z-50');
+            });
+
+            // 1. Market Share Chart (Doughnut)
+            const ctxShare = document.getElementById('marketShareChart').getContext('2d');
+            new Chart(ctxShare, {
+                type: 'doughnut',
+                data: {
+                    labels: ['AWS', 'Azure', 'Google Cloud', 'Alibaba', 'Others'],
+                    datasets: [{
+                        data: [32, 23, 11, 4, 30],
+                        backgroundColor: ['#FF9900', '#0078D4', '#DB4437', '#FF6A00', '#E5E7EB'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 2. Capabilities Chart (Radar)
+            const ctxCap = document.getElementById('capabilitiesChart').getContext('2d');
+            new Chart(ctxCap, {
+                type: 'radar',
+                data: {
+                    labels: ['기술 성숙도', '엔터프라이즈 통합', '사용 편의성(UX)', '오픈소스 친화성', 'AI/ML 혁신'],
+                    datasets: [{
+                        label: 'AWS',
+                        data: [95, 80, 75, 90, 85],
+                        fill: true,
+                        backgroundColor: 'rgba(255, 153, 0, 0.2)',
+                        borderColor: '#FF9900',
+                        pointBackgroundColor: '#FF9900',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#FF9900'
+                    }, {
+                        label: 'Azure',
+                        data: [85, 98, 85, 75, 95],
+                        fill: true,
+                        backgroundColor: 'rgba(0, 120, 212, 0.2)',
+                        borderColor: '#0078D4',
+                        pointBackgroundColor: '#0078D4',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#0078D4'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { display: true },
+                            suggestedMin: 50,
+                            suggestedMax: 100,
+                            ticks: { display: false } // Hide numbers for cleaner look
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+
+            // 3. Infrastructure Chart (Bar)
+            const ctxInfra = document.getElementById('infraChart').getContext('2d');
+            new Chart(ctxInfra, {
+                type: 'bar',
+                data: {
+                    labels: ['전 세계 리전 수', '가용 영역(AZ) 수', '서비스 국가'],
+                    datasets: [
+                        {
+                            label: 'AWS',
+                            data: [33, 105, 245],
+                            backgroundColor: '#FF9900',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Azure',
+                            data: [60, 120, 140],
+                            backgroundColor: '#0078D4',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                afterBody: function(context) {
+                                    return "참고: Azure는 리전 수가 많으나 일부 리전은 규모가 작음.";
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Animation Utility
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes fadeInUp {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
+                .animate-fade-in-up { animation: fadeInUp 0.3s ease-out forwards; }
+            </style>
+        `);
+    </script>
+</body>
+</html>
